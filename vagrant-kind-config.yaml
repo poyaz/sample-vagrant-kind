@@ -1,0 +1,47 @@
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+nodes:
+  - role: control-plane
+    extraMounts:
+      - hostPath: /etc/localtime
+        containerPath: /etc/localtime
+        readOnly: true
+  - role: worker
+    extraMounts:
+      - hostPath: /etc/localtime
+        containerPath: /etc/localtime
+        readOnly: true
+      - hostPath: /run/udev
+        containerPath: /run/udev
+    kubeadmConfigPatches:
+      - |
+        kind: JoinConfiguration
+        nodeRegistration:
+          kubeletExtraArgs:
+            node-labels: "example.tech/dc=dc-1"
+  - role: worker
+    extraMounts:
+      - hostPath: /etc/localtime
+        containerPath: /etc/localtime
+        readOnly: true
+      - hostPath: /run/udev
+        containerPath: /run/udev
+    kubeadmConfigPatches:
+      - |
+        kind: JoinConfiguration
+        nodeRegistration:
+          kubeletExtraArgs:
+            node-labels: "example.tech/dc=dc-1"
+  - role: worker
+    extraMounts:
+      - hostPath: /etc/localtime
+        containerPath: /etc/localtime
+        readOnly: true
+      - hostPath: /run/udev
+        containerPath: /run/udev
+    kubeadmConfigPatches:
+      - |
+        kind: JoinConfiguration
+        nodeRegistration:
+          kubeletExtraArgs:
+            node-labels: "example.tech/dc=dc-2"
